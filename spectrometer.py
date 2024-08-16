@@ -214,3 +214,5 @@ class Spectrometer:
         """
         data = pd.read_csv(file)
         plt.plot(data[data.columns[2]][:-1], data.columns[5][:-1])
+        plt.xlabel('Wavelength [nm]')
+        plt.ylabel('Intensity (counts)')
