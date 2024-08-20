@@ -8,6 +8,7 @@ import sys
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+import subprocess
 
 # Import System.IO for saving and opening files
 from System.IO import *
@@ -54,7 +55,7 @@ class Spectrometer:
                 self.experiment_name = self.experiment.get_Name()
             print(f'Success, experiment {self.experiment_name} set up.')
         except Exception as err:
-            raise err
+            print(err)
         
     def set_center_wavelength(self, center_wave_length: float): 
         """Set the center wavelength of the spectrometer.
@@ -216,3 +217,9 @@ class Spectrometer:
         plt.plot(data[data.columns[2]][:-1], data.columns[5][:-1])
         plt.xlabel('Wavelength [nm]')
         plt.ylabel('Intensity (counts)')
+
+    def disconnect(self):
+        """This function enables to close properly the lightfield app running. Always use this function, otherwise it can break lightfield and make it crash later on.
+        """
+        subprocess.run(["taskkill", "/IM", "AddInProcess.exe"])
+        print("Lightfield disconnected.")
